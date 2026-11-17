@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /fisio-ejemplo/
+Disallow: /magia-en-el-bosque/
+Disallow: /restaurante/

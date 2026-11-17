@@ -1,0 +1,147 @@
+/* Página de presentación. Los escaparates usan los colores de cada negocio (--c1 principal, --c2 acento). */
+:root {
+  --acera: #eef0ec;
+  --tinta: #18211d;
+  --azul: #1f45c4;
+  --apagado: #5a655f;
+  --linea: #d5dad3;
+  --blanco: #ffffff;
+  --rotulo: "Young Serif", Georgia, "Times New Roman", serif;   /* titulares y rótulos */
+  --fuente: "Schibsted Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --margen: clamp(16px, 5vw, 64px);
+  --ancho: 1180px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--acera); color: var(--tinta);
+  font-family: var(--fuente); font-size: 1.0625rem; line-height: 1.55;
+}
+h1, h2, h3 { margin: 0; line-height: 1.05; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--azul); outline-offset: 3px; border-radius: 4px; }
+section[id] { scroll-margin-top: 80px; }
+
+/* ---------- Cabecera ---------- */
+.cabecera {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: .9rem var(--margen); background: color-mix(in srgb, var(--acera) 90%, transparent);
+  backdrop-filter: blur(8px); border-bottom: 1px solid var(--linea);
+}
+.firma { font-family: var(--rotulo); font-size: 1.35rem; text-decoration: none; }
+.cabecera nav { display: flex; gap: clamp(.8rem, 3vw, 2rem); align-items: center; font-weight: 500; }
+.cabecera nav a { text-decoration: none; }
+.cabecera nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.cabecera__cta { color: var(--azul); }
+
+/* ---------- Botones ---------- */
+.botones { display: flex; flex-wrap: wrap; gap: .75rem; }
+.boton {
+  display: inline-block; padding: .8rem 1.4rem; border-radius: 8px; font-weight: 600; text-decoration: none;
+  background: var(--azul); color: var(--blanco); border: 2px solid var(--azul); text-align: center;
+}
+.boton:hover { background: var(--tinta); border-color: var(--tinta); }
+.boton--linea { background: transparent; color: var(--tinta); border-color: var(--tinta); }
+.boton--linea:hover { background: var(--tinta); color: var(--blanco); }
+
+/* ---------- Portada ---------- */
+.hero { max-width: var(--ancho); margin: 0 auto; padding: clamp(3rem, 10vw, 7.5rem) var(--margen) clamp(2.5rem, 7vw, 5rem); }
+.hero h1 {
+  font-family: var(--rotulo); font-weight: 400; font-size: clamp(2.5rem, 7.4vw, 5.8rem);
+  letter-spacing: -.025em; line-height: 1; max-width: 14ch;
+}
+.hero__intro { font-size: clamp(1.1rem, 2vw, 1.3rem); color: var(--apagado); max-width: 58ch; margin: 1.6rem 0 2rem; }
+
+/* ---------- La calle de escaparates ---------- */
+.calle { background: var(--tinta); color: var(--acera); padding: clamp(3rem, 7vw, 5.5rem) var(--margen) clamp(3.5rem, 8vw, 6rem); }
+.calle__cabeza { max-width: var(--ancho); margin: 0 auto 2.6rem; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 1rem 3rem; align-items: end; }
+.calle__cabeza h2 { font-family: var(--rotulo); font-weight: 400; font-size: clamp(2.2rem, 5vw, 3.4rem); letter-spacing: -.02em; }
+.calle__cabeza p { color: color-mix(in srgb, var(--acera) 75%, var(--tinta)); max-width: 52ch; }
+
+.escaparates { max-width: var(--ancho); margin: 0 auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 2.5vw, 2rem); align-items: stretch; }
+
+.local { display: flex; flex-direction: column; background: var(--c1); color: var(--blanco); border-radius: 6px 6px 0 0; }
+/* Toldo a rayas con el borde ondulado */
+.toldo {
+  height: 46px; border-radius: 6px 6px 0 0;
+  background: repeating-linear-gradient(90deg, var(--c2) 0 26px, var(--blanco) 26px 52px);
+  -webkit-mask: radial-gradient(13px at 50% calc(100% - 13px), #000 98%, transparent) 0 0 / 26px 100% repeat-x,
+                linear-gradient(#000 0 0) 0 0 / 100% calc(100% - 13px) no-repeat;
+          mask: radial-gradient(13px at 50% calc(100% - 13px), #000 98%, transparent) 0 0 / 26px 100% repeat-x,
+                linear-gradient(#000 0 0) 0 0 / 100% calc(100% - 13px) no-repeat;
+  transform-origin: top; animation: desplegar .7s cubic-bezier(.2, .8, .2, 1) both;
+}
+.local:nth-child(2) .toldo { animation-delay: .12s; }
+.local:nth-child(3) .toldo { animation-delay: .24s; }
+@keyframes desplegar { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+.rotulo {
+  padding: 1.1rem 1.3rem 1rem; font-family: var(--rotulo); font-weight: 400; font-size: clamp(1.45rem, 2.3vw, 1.8rem);
+  letter-spacing: -.01em; line-height: 1.1;
+}
+.escaparate {
+  flex: 1; margin: 0 .8rem; padding: 1.2rem 1.2rem 1.4rem; border-radius: 4px;
+  background: var(--blanco); color: var(--tinta);
+  box-shadow: inset 0 0 0 6px color-mix(in srgb, var(--c1) 18%, var(--blanco));
+}
+.local__sector { font-weight: 700; color: var(--c1); margin-bottom: .35rem; }
+.escaparate ul { margin: 1rem 0 0; padding: 0; list-style: none; display: grid; gap: .4rem; font-size: .97rem; }
+.escaparate li { padding-left: 1.1rem; position: relative; }
+.escaparate li::before { content: ""; position: absolute; left: 0; top: .6em; width: .45rem; height: .45rem; border-radius: 50%; background: var(--c2); }
+
+.puerta { padding: 1rem .8rem 1.2rem; display: grid; gap: .6rem; }
+.puerta .boton { display: block; }
+.boton--local { background: var(--blanco); color: var(--c1); border-color: var(--blanco); }
+.boton--local:hover { background: var(--c2); border-color: var(--c2); color: var(--tinta); }
+.puerta .boton--linea { color: var(--blanco); border-color: color-mix(in srgb, var(--blanco) 70%, transparent); }
+.puerta .boton--linea:hover { background: var(--blanco); color: var(--c1); }
+.credenciales { font-size: .9rem; text-align: center; color: color-mix(in srgb, var(--blanco) 85%, var(--c1)); }
+kbd { font-family: inherit; font-weight: 700; background: color-mix(in srgb, var(--blanco) 18%, transparent); padding: .05rem .4rem; border-radius: 4px; }
+
+/* ---------- Bloques de texto ---------- */
+.bloque { max-width: var(--ancho); margin: 0 auto; padding: clamp(3rem, 8vw, 6rem) var(--margen) 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 1.5rem 3rem; }
+.bloque h2 { font-family: var(--rotulo); font-weight: 400; font-size: clamp(1.8rem, 3.4vw, 2.5rem); letter-spacing: -.015em; line-height: 1.1; }
+
+.incluye { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.8rem 2.5rem; }
+.incluye dt { font-weight: 700; font-size: 1.15rem; margin-bottom: .3rem; }
+.incluye dd { margin: 0; color: var(--apagado); }
+
+.pasos { margin: 0; padding: 0; list-style: none; counter-reset: paso; display: grid; gap: 0; }
+.pasos li { counter-increment: paso; display: grid; grid-template-columns: 3.2rem 1fr; column-gap: 1rem; padding: 1.2rem 0; border-top: 1px solid var(--linea); }
+.pasos li:last-child { border-bottom: 1px solid var(--linea); }
+.pasos li::before { content: counter(paso); grid-row: span 2; font-family: var(--rotulo); font-size: 2.2rem; line-height: 1; color: var(--azul); }
+.pasos h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: .25rem; }
+.pasos p { color: var(--apagado); }
+
+/* ---------- Contacto ---------- */
+.contacto { max-width: var(--ancho); margin: clamp(3.5rem, 9vw, 7rem) auto 0; padding: 0 var(--margen); }
+.contacto h2 { font-family: var(--rotulo); font-weight: 400; font-size: clamp(2.3rem, 6vw, 4.6rem); letter-spacing: -.025em; line-height: 1.02; max-width: 14ch; }
+.contacto > p { color: var(--apagado); max-width: 56ch; margin: 1.2rem 0 2rem; font-size: 1.15rem; }
+.contacto__vias { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 1rem; }
+.contacto__vias a {
+  display: grid; gap: .1rem; padding: 1rem 1.4rem; min-width: 240px; border-radius: 8px; text-decoration: none;
+  background: var(--blanco); border: 2px solid var(--tinta); font-size: 1.2rem; font-weight: 700;
+}
+.contacto__vias a:hover { background: var(--azul); border-color: var(--azul); color: var(--blanco); }
+.contacto__vias span { font-size: .9rem; font-weight: 500; opacity: .75; }
+
+.pie { max-width: var(--ancho); margin: clamp(3rem, 8vw, 6rem) auto 0; padding: 1.5rem var(--margen) 2rem; border-top: 1px solid var(--linea); color: var(--apagado); font-size: .9rem; }
+
+/* ---------- Móvil ---------- */
+@media (max-width: 900px) {
+  .escaparates { grid-template-columns: 1fr; max-width: 520px; }
+  .calle__cabeza, .bloque { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .cabecera nav a:not(.cabecera__cta) { display: none; }
+  .incluye { grid-template-columns: 1fr; }
+  .contacto__vias a { min-width: 0; width: 100%; }
+  .contacto__vias li { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .toldo { animation: none; }
+}
