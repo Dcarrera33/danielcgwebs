@@ -8,7 +8,8 @@
     document.documentElement.classList.add("js");
     var groups = document.querySelectorAll(
       ".split__photo, .split__text > *, .page-head > *, .section-head > *, .course-list, .course__main > *, .aside, " +
-      ".carousel-wrap, .steps, .faq-layout__head, .faq, .cta-band__inner > *, .contact > *"
+      ".carousel-wrap, .steps, .faq-layout__head, .faq, .cta-band__inner > *, .contact > *, " +
+      ".candle-block__head, .candle-grid, .candle__media, .candle__info > *"
     );
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
@@ -17,7 +18,7 @@
     }, { rootMargin: "0px 0px -8% 0px" });
     groups.forEach(function (el) {
       // Las listas entran elemento a elemento
-      var items = el.matches(".course-list, .steps, .faq") ? el.children : [el];
+      var items = el.matches(".course-list, .steps, .faq, .candle-grid") ? el.children : [el];
       Array.prototype.forEach.call(items, function (item) {
         var siblings = Array.prototype.indexOf.call(item.parentNode.children, item);
         item.classList.add("reveal");
@@ -26,6 +27,58 @@
       });
     });
   }
+
+  // ---- Cabecera: se vuelve más opaca al bajar ----
+  var header = document.querySelector(".site-header");
+  if (header) {
+    var onScroll = function () { header.classList.toggle("is-scrolled", window.scrollY > 12); };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+
+  // ---- Brillo dorado que sigue al ratón dentro de las tarjetas ----
+  if (window.matchMedia && window.matchMedia("(hover: hover)").matches) {
+    document.querySelectorAll(".course-row__link, .candle-card__link, .steps li, .panel").forEach(function (card) {
+      card.addEventListener("pointermove", function (e) {
+        var r = card.getBoundingClientRect();
+        card.style.setProperty("--mx", (e.clientX - r.left) + "px");
+        card.style.setProperty("--my", (e.clientY - r.top) + "px");
+      });
+    });
+  }
+
+  // ---- Menú de una sola página: marca la sección que se está viendo ----
+  var hashLinks = Array.prototype.filter.call(document.querySelectorAll(".menu a"), function (a) {
+    return a.getAttribute("href").charAt(0) === "#";
+  });
+  if (hashLinks.length && "IntersectionObserver" in window) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        hashLinks.forEach(function (a) {
+          if (a.getAttribute("href") === "#" + e.target.id) a.setAttribute("aria-current", "true");
+          else a.removeAttribute("aria-current");
+        });
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    hashLinks.forEach(function (a) {
+      var target = document.getElementById(a.getAttribute("href").slice(1));
+      if (target) spy.observe(target);
+    });
+  }
+
+  // ---- Fotos de una vela: al pulsar una miniatura cambia la foto grande ----
+  document.querySelectorAll("[data-gallery]").forEach(function (box) {
+    var main = box.querySelector("[data-gallery-main]");
+    var thumbs = box.querySelectorAll(".candle__thumbs button");
+    if (!main) return;
+    thumbs.forEach(function (t) {
+      t.addEventListener("click", function () {
+        main.src = t.dataset.src;
+        thumbs.forEach(function (o) { o.setAttribute("aria-current", o === t ? "true" : "false"); });
+      });
+    });
+  });
 
   // ---- Menú hamburguesa (móvil) ----
   var burger = document.querySelector(".burger");

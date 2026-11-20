@@ -116,6 +116,39 @@ kbd { font-family: inherit; font-weight: 700; background: color-mix(in srgb, var
 .pasos h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: .25rem; }
 .pasos p { color: var(--apagado); }
 
+/* ---------- Tarifas (se editan con panel_tarifas.bat) ---------- */
+.tarifas { max-width: var(--ancho); margin: 0 auto; padding: clamp(3rem, 8vw, 6rem) var(--margen) 0; }
+.tarifas__cabeza { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 1rem 3rem; align-items: end; margin-bottom: 2rem; }
+.tarifas__cabeza h2 { font-family: var(--rotulo); font-weight: 400; font-size: clamp(1.8rem, 3.4vw, 2.5rem); letter-spacing: -.015em; line-height: 1.1; }
+.tarifas__cabeza p { color: var(--apagado); max-width: 56ch; }
+
+.planes { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: clamp(1rem, 2vw, 1.5rem); align-items: stretch; }
+.plan { position: relative; display: flex; flex-direction: column; padding: 1.6rem 1.5rem 1.5rem; background: var(--blanco); border: 1px solid var(--linea); border-radius: 10px; }
+.plan--destacado { background: var(--tinta); color: var(--acera); border-color: var(--tinta); }
+.plan__etiqueta { position: absolute; top: -.8rem; left: 1.5rem; padding: .2rem .75rem; border-radius: 999px; background: var(--azul); color: var(--blanco); font-size: .85rem; font-weight: 700; }
+.plan__nombre { font-size: 1.2rem; font-weight: 700; }
+.plan__precio { margin: .8rem 0 .2rem; font-family: var(--rotulo); font-size: clamp(2rem, 3.6vw, 2.6rem); line-height: 1.05; letter-spacing: -.02em; }
+.plan__precio span { display: block; margin-top: .3rem; font-family: var(--fuente); font-size: .95rem; letter-spacing: 0; color: var(--apagado); }
+.plan--destacado .plan__precio span, .plan--destacado .plan__texto { color: color-mix(in srgb, var(--acera) 75%, var(--tinta)); }
+.plan__texto { color: var(--apagado); margin-top: .6rem; }
+.plan__incluye { list-style: none; margin: 1.1rem 0 1.5rem; padding: 1.1rem 0 0; border-top: 1px solid var(--linea); display: grid; gap: .45rem; font-size: .97rem; }
+.plan--destacado .plan__incluye { border-top-color: color-mix(in srgb, var(--acera) 20%, transparent); }
+.plan__incluye li { position: relative; padding-left: 1.5rem; }
+.plan__incluye li::before { content: ""; position: absolute; left: .1rem; top: .35em; width: .45rem; height: .8rem; border: solid var(--azul); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.plan--destacado .plan__incluye li::before { border-color: #9db2ff; }
+.plan .boton { margin-top: auto; }
+.plan--destacado .boton { background: var(--blanco); color: var(--tinta); border-color: var(--blanco); }
+.plan--destacado .boton:hover { background: var(--azul); border-color: var(--azul); color: var(--blanco); }
+
+.extras { margin-top: 2rem; padding: 1.4rem 1.5rem; border: 1px dashed var(--linea); border-radius: 10px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 4fr); gap: 1rem 2rem; }
+.extras h3 { font-size: 1.1rem; font-weight: 700; }
+.extras dl { margin: 0; display: grid; gap: .9rem; }
+.extras dl > div { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 1rem; }
+.extras dt { font-weight: 700; }
+.extras__precio { margin: 0; font-weight: 700; white-space: nowrap; }
+.extras__texto { margin: 0; grid-column: 1 / -1; color: var(--apagado); font-size: .95rem; }
+.tarifas__nota { margin-top: 1.2rem; color: var(--apagado); font-size: .92rem; }
+
 /* ---------- Contacto ---------- */
 .contacto { max-width: var(--ancho); margin: clamp(3.5rem, 9vw, 7rem) auto 0; padding: 0 var(--margen); }
 .contacto h2 { font-family: var(--rotulo); font-weight: 400; font-size: clamp(2.3rem, 6vw, 4.6rem); letter-spacing: -.025em; line-height: 1.02; max-width: 14ch; }
@@ -133,7 +166,7 @@ kbd { font-family: inherit; font-weight: 700; background: color-mix(in srgb, var
 /* ---------- Móvil ---------- */
 @media (max-width: 900px) {
   .escaparates { grid-template-columns: 1fr; max-width: 520px; }
-  .calle__cabeza, .bloque { grid-template-columns: 1fr; }
+  .calle__cabeza, .bloque, .tarifas__cabeza, .extras { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {
   .cabecera nav a:not(.cabecera__cta) { display: none; }
